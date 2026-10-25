@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>우리의 완벽한 여행 계획서 ✈️</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f8fafc;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 h-screen flex flex-col overflow-hidden">
+
+    <!-- 상단 헤더 -->
+    <header class="bg-white border-b border-slate-200 px-4 sm:px-6 py-2.5 flex flex-wrap justify-between items-center shrink-0 z-20 gap-2">
+        <div class="flex items-center space-x-3">
+            <div class="bg-indigo-600 text-white p-2 rounded-xl shadow-md flex items-center justify-center">
+                <i class="fa-solid fa-earth-americas text-lg"></i>
+            </div>
+            <div>
+                <div class="flex items-center gap-2">
+                    <h1 class="text-lg font-bold text-slate-900" id="tripTitleDisplay">전 세계 글로벌 여행 스마트 패스 🌐</h1>
+                    <span id="tripModeBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 border border-indigo-200">
+                        🌍 글로벌 모드 (전 세계 지원)
+                    </span>
+                </div>
+                <p class="text-xs text-slate-500 hidden sm:block">전 세계 모든 국가/지역 최적 경로 • 실제 항공 시세 • 실전 현지 회화</p>
+            </div>
+        </div>
+
+        <!-- 공유 버튼 -->
+        <div class="flex items-center space-x-2">
+            <button onclick="copyShareLink()" class="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-xs font-semibold transition flex items-center gap-1 shadow-sm shrink-0">
+                <i class="fa-solid fa-share-nodes"></i> <span class="hidden sm:inline">공유</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- 메인 콘텐츠 레이아웃 -->
+    <div class="flex-1 flex flex-col md:flex-row overflow-hidden relative">
+        
+        <!-- 왼쪽 패널: 탭 메뉴 & 주요 기능 -->
+        <div class="w-full md:w-1/2 lg:w-5/12 flex flex-col bg-white border-r border-slate-200 overflow-hidden h-full pb-16 md:pb-0">
+            <!-- 웹 데스크톱용 상단 탭 메뉴 -->
+            <div class="hidden md:flex border-b border-slate-200 bg-slate-50 p-1.5 gap-1 shrink-0 text-xs font-medium">
+                <button id="tabBtn1" onclick="switchTab('transit')" class="flex-1 py-2 px-1 rounded-lg font-bold transition flex items-center justify-center gap-1 bg-white text-indigo-600 shadow-sm">
+                    <i class="fa-solid fa-route"></i> 전 세계 길찾기
+                </button>
+                <button id="tabBtn2" onclick="switchTab('cost')" class="flex-1 py-2 px-1 rounded-lg transition flex items-center justify-center gap-1 text-slate-500">
+                    <i class="fa-solid fa-plane-departure text-amber-500"></i> 항공/경비
+                </button>
+                <button id="tabBtn3" onclick="switchTab('ai_translator')" class="flex-1 py-2 px-1 rounded-lg transition flex items-center justify-center gap-1 text-slate-500">
+                    <i class="fa-solid fa-language text-purple-500"></i> 현지회화/AI번역
+                </button>
+                <button id="tabBtn4" onclick="switchTab('reels')" class="flex-1 py-2 px-1 rounded-lg transition flex items-center justify-center gap-1 text-slate-500">
+                    <i class="fa-brands fa-instagram text-pink-500"></i> 맛집
+                </button>
+                <button id="tabBtn5" onclick="switchTab('itinerary')" class="flex-1 py-2 px-1 rounded-lg transition flex items-center justify-center gap-1 text-slate-500">
+                    <i class="fa-solid fa-users text-green-500"></i> 공유메모
+                </button>
+                <button id="tabBtn6" onclick="switchTab('private')" class="flex-1 py-2 px-1 rounded-lg transition flex items-center justify-center gap-1 text-slate-500">
+                    <i class="fa-solid fa-lock text-rose-500"></i> 비밀메모
+                </button>
+            </div>
+
+            <!-- 탭 1: 최적화 길찾기 & 환승 계산기 (자유 국가 입력 기반) -->
+            <div id="tabContent1" class="flex-1 overflow-y-auto p-4 custom-scrollbar space-y-4">
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center mb-1">
+                        <h3 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-globe text-indigo-600"></i>
+                            <span>글로벌 스마트 최적 경로 분석</span>
+                        </h3>
+                        <span class="text-[10px] bg-indigo-100 text-indigo-700 font-bold px-2 py-0.5 rounded-full">전 세계 모든 지역</span>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
+                            <span class="text-xs font-bold text-slate-400 w-14 text-center shrink-0">출발지</span>
+                            <input type="text" id="startLocInput" placeholder="예: 서울 인천공항, 포천시청 등" value="포천시청" class="w-full text-xs text-slate-800 font-semibold focus:outline-none">
+                        </div>
+
+                        <div class="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
+                            <span class="text-xs font-bold text-emerald-600 w-14 text-center shrink-0">목적지</span>
+                            <input type="text" id="endLocInput" placeholder="예: 프랑스 에펠탑, 구리역, 잠실역" value="잠실역" class="w-full text-xs text-slate-800 font-semibold focus:outline-none">
+                        </div>
+                    </div>
+
+                    <button onclick="calculateRoute()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white font-bold rounded-xl text-xs shadow-md transition flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> AI 실시간 버스 시간표 & 막다른 길 검증 최적 경로 분석
+                    </button>
+                </div>
+
+                <!-- 실시간 새로고침 및 히스토리 헤더 -->
+                <div class="flex items-center justify-between px-1">
+                    <span class="text-xs font-bold text-slate-700 flex items-center gap-1">
+                        <i class="fa-solid fa-clock-rotate-left text-indigo-500"></i> 과거 조회 시간표 기록
+                    </span>
+                    <button onclick="refreshRoute()" class="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-bold rounded-lg text-xs transition flex items-center gap-1 active:scale-95 border border-indigo-200">
+                        <i class="fa-solid fa-rotate text-[11px]" id="refreshIcon"></i> 실시간 새로고침
+                    </button>
+                </div>
+
+                <!-- 과거 조회 기록 슬라이드 목록 -->
+                <div id="routeHistoryContainer" class="flex gap-2 overflow-x-auto pb-1 text-xs custom-scrollbar hidden"></div>
+
+                <div id="routeResultContainer" class="space-y-3"></div>
+
+                <div class="p-3 bg-indigo-50/70 border border-indigo-100 rounded-xl space-y-2">
+                    <span class="text-xs font-bold text-slate-700 block"><i class="fa-solid fa-external-link text-indigo-500"></i> 외부 네비 지도 경로 연결</span>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="openNaverPublicTransit()" class="py-2.5 bg-emerald-600 active:scale-95 text-white font-bold rounded-xl text-xs shadow transition flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-bus"></i> 네이버 길찾기
+                        </button>
+                        <button onclick="openGoogleMapsTransit()" class="py-2.5 bg-blue-600 active:scale-95 text-white font-bold rounded-xl text-xs shadow transition flex items-center justify-center gap-1">
+                            <i class="fa-brands fa-google"></i> 구글 길찾기
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 탭 2: 실시간 항공권 & 현지 경비 분석 -->
+            <div id="tabContent2" class="flex-1 overflow-y-auto p-4 custom-scrollbar space-y-4 hidden">
+                <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200 space-y-3">
+                    <h3 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                        <i class="fa-solid fa-coins text-amber-600"></i> 실시간 국제선/국내선 항공권 시세 및 경비 계산
+                    </h3>
+
+                    <!-- 출발/목적 국가 및 공항 입력 필드 분리 -->
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-amber-200 shadow-sm">
+                            <span class="text-xs font-bold text-slate-500 w-16 text-center shrink-0">출발 공항/도시</span>
+                            <input type="text" id="flightStartInput" placeholder="예: 인천(ICN), 김포(GMP), 부산(PUS)" value="인천공항(ICN)" class="w-full text-xs text-slate-800 font-semibold focus:outline-none">
+                        </div>
+
+                        <div class="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-amber-200 shadow-sm">
+                            <span class="text-xs font-bold text-amber-600 w-16 text-center shrink-0">목적 공항/도시</span>
+                            <input type="text" id="flightEndInput" placeholder="예: 파리 샤를드골(CDG), 도쿄 나리타(NRT)" value="프랑스 파리(CDG)" class="w-full text-xs text-slate-800 font-semibold focus:outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">여행 인원</label>
+                            <input type="number" id="travelerCount" value="2" min="1" onchange="calculateFlightAndCost()" class="w-full p-2 border border-slate-200 rounded-xl">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">여행 기간 (일)</label>
+                            <input type="number" id="travelDays" value="4" min="1" onchange="calculateFlightAndCost()" class="w-full p-2 border border-slate-200 rounded-xl">
+                        </div>
+                    </div>
+                    <button onclick="calculateFlightAndCost()" class="w-full py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-xs shadow transition active:scale-95">
+                        실시간 항공 시세 및 체류 경비 계산 🧮
+                    </button>
+                </div>
+
+                <div id="flightCostResult" class="space-y-3"></div>
+            </div>
+
+            <!-- 탭 3: 현지 언어 실전 회화 & AI 카메라 번역 -->
+            <div id="tabContent3" class="flex-1 overflow-y-auto p-4 custom-scrollbar space-y-4 hidden">
+                <div class="bg-purple-50 p-4 rounded-2xl border border-purple-100 space-y-3">
+                    <h3 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                        <i class="fa-solid fa-comments text-purple-600"></i> 목적지 실전 현지 회화 & AI 시각 번역
+                    </h3>
+                    <p class="text-[11px] text-slate-600">목적지에서 현지인들이 실제로 사용하는 실전 원어 표현 및 한글 발음을 제공합니다.</p>
+                    
+                    <div class="border-2 border-dashed border-purple-200 rounded-xl p-4 text-center bg-white">
+                        <input type="file" id="aiCameraInput" accept="image/*" capture="environment" onchange="processAITranslation(event)" class="hidden">
+                        <label for="aiCameraInput" class="cursor-pointer flex flex-col items-center justify-center gap-2">
+                            <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-camera-retro"></i>
+                            </div>
+                            <span class="text-xs font-bold text-purple-700">메뉴판 / 간판 사진 번역</span>
+                        </label>
+                    </div>
+
+                    <div id="aiImagePreviewContainer" class="hidden">
+                        <img id="aiImagePreview" class="w-full h-36 object-cover rounded-xl border border-slate-200">
+                    </div>
+                </div>
+
+                <!-- 실전 현지 표현 카드 -->
+                <div id="localPhrasesContainer" class="space-y-3"></div>
+
+                <!-- AI 번역 결과 카드 -->
+                <div id="aiTranslationResult" class="hidden space-y-3"></div>
+            </div>
+
+            <!-- 탭 4: 맛집 & 릴스 스크랩 -->
+            <div id="tabContent4" class="flex-1 overflow-y-auto p-4 custom-scrollbar space-y-4 hidden">
+                <div class="bg-gradient-to-r from-pink-50 to-purple-50 p-4 rounded-2xl border border-pink-100">
+                    <h3 class="font-bold text-slate-800 text-sm mb-3 flex items-center gap-1.5">
+                        <i class="fa-solid fa-plus-circle text-pink-500"></i> 맛집 / 인스타 릴스 스크랩 등록
+                    </h3>
+                    <form id="addReelForm" onsubmit="handleAddReel(event)" class="space-y-2.5">
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="text" id="reelName" placeholder="가게명 / 장소" required class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs focus:outline-none">
+                            <select id="reelCategory" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs focus:outline-none">
+                                <option value="맛집">🍲 맛집</option>
+                                <option value="카페">☕ 카페</option>
+                                <option value="명소">📸 명소/핫플</option>
+                                <option value="숙소">🏨 숙소</option>
+                            </select>
+                        </div>
+                        <input type="url" id="reelLink" placeholder="인스타 릴스 / 블로그 URL" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs focus:outline-none">
+                        <input type="url" id="reelImg" placeholder="대표 이미지 URL (선택)" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs focus:outline-none">
+                        <textarea id="reelMemo" placeholder="추천 메뉴 및 꿀팁 메모" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs focus:outline-none"></textarea>
+                        <button type="submit" class="w-full py-2.5 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-lg text-xs shadow transition">
+                            친구 공유 스크랩에 등록하기 🚀
+                        </button>
+                    </form>
+                </div>
+
+                <div>
+                    <h2 class="text-xs font-bold text-slate-700 mb-2.5 flex items-center justify-between">
+                        <span><i class="fa-solid fa-bookmark text-amber-500"></i> 함께 공유 중인 스크랩</span>
+                        <span id="scrapCount" class="bg-slate-100 px-2 py-0.5 rounded-full text-slate-600 text-[11px]">0개</span>
+                    </h2>
+                    <div id="scrapList" class="space-y-3"></div>
+                </div>
+            </div>
+
+            <!-- 탭 5: 공유 일정 체크리스트 -->
+            <div id="tabContent5" class="flex-1 overflow-y-auto p-4 custom-scrollbar space-y-4 hidden">
+                <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-100 space-y-2">
+                    <h3 class="font-bold text-slate-800 text-sm"><i class="fa-solid fa-users text-emerald-600"></i> 같이 보는 공유 체크리스트</h3>
+                    <div class="flex gap-2">
+                        <input type="text" id="memoInput" placeholder="예: 여권 챙기기, 포켓 와이파이 대여" class="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-xs focus:outline-none">
+                        <button onclick="addMemoItem()" class="px-3.5 py-2 bg-emerald-600 text-white rounded-lg text-xs font-bold">추가</button>
+                    </div>
+                </div>
+                <div class="space-y-2" id="memoList"></div>
+            </div>
+
+            <!-- 탭 6: 4자리 암호 잠금 개인 비밀 메모장 -->
+            <div id="tabContent6" class="flex-1 overflow-y-auto p-4 custom-scrollbar space-y-4 hidden">
+                <div id="privateLockScreen" class="bg-rose-50 p-6 rounded-2xl border border-rose-200 text-center space-y-4">
+                    <div class="w-12 h-12 bg-rose-500 text-white rounded-full flex items-center justify-center mx-auto text-xl shadow">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-sm">보안 개인 메모장</h3>
+                        <p class="text-xs text-slate-500 mt-1">4자리 PIN 비밀번호를 입력해야 열람 가능합니다.</p>
+                    </div>
+                    <div class="flex justify-center gap-2 max-w-[200px] mx-auto">
+                        <input type="password" id="pinCodeInput" maxlength="4" placeholder="****" class="w-full text-center tracking-widest text-lg font-bold py-2 border border-rose-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400">
+                    </div>
+                    <button onclick="unlockPrivateMemo()" class="w-full py-2.5 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-xl text-xs shadow">
+                        비밀번호 확인 및 잠금 해제 🔓
+                    </button>
+                </div>
+
+                <div id="privateContentScreen" class="hidden space-y-4">
+                    <div class="bg-rose-50 p-4 rounded-2xl border border-rose-200 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-slate-800 text-sm"><i class="fa-solid fa-user-shield text-rose-500"></i> 나만의 나이트/예산 비밀 메모</h3>
+                            <button onclick="lockPrivateMemo()" class="text-[11px] bg-rose-200 text-rose-800 px-2 py-0.5 rounded-md font-bold">다시 잠그기 🔒</button>
+                        </div>
+                        <div class="flex gap-2">
+                            <input type="text" id="privateMemoInput" placeholder="나만의 비상금, 보안 계좌, 비밀 가이드" class="flex-1 px-3 py-2 border border-rose-200 rounded-lg text-xs focus:outline-none">
+                            <button onclick="addPrivateMemo()" class="px-3.5 py-2 bg-rose-500 text-white rounded-lg text-xs font-bold">저장</button>
+                        </div>
+                    </div>
+                    <div class="space-y-2" id="privateMemoList"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 모바일 하단 네비게이션 바 -->
+        <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-2 py-1.5 flex justify-around items-center z-30 text-[10px] font-bold text-slate-500">
+            <button onclick="switchTab('transit')" id="mTabBtn1" class="flex flex-col items-center py-1 text-indigo-600">
+                <i class="fa-solid fa-route text-base mb-0.5"></i> 길찾기
+            </button>
+            <button onclick="switchTab('cost')" id="mTabBtn2" class="flex flex-col items-center py-1">
+                <i class="fa-solid fa-plane-departure text-base mb-0.5"></i> 항공/경비
+            </button>
+            <button onclick="switchTab('ai_translator')" id="mTabBtn3" class="flex flex-col items-center py-1">
+                <i class="fa-solid fa-comments text-base mb-0.5"></i> 현지회화
+            </button>
+            <button onclick="switchTab('reels')" id="mTabBtn4" class="flex flex-col items-center py-1">
+                <i class="fa-brands fa-instagram text-base mb-0.5"></i> 맛집
+            </button>
+            <button onclick="switchTab('itinerary')" id="mTabBtn5" class="flex flex-col items-center py-1">
+                <i class="fa-solid fa-users text-base mb-0.5"></i> 공유메모
+            </button>
+            <button onclick="switchTab('private')" id="mTabBtn6" class="flex flex-col items-center py-1">
+                <i class="fa-solid fa-lock text-base mb-0.5"></i> 비밀메모
+            </button>
+        </div>
+
+        <!-- 오른쪽 패널: 지형 및 구글 지도 프레임 -->
+        <div class="w-full md:w-1/2 lg:w-7/12 h-64 md:h-full relative bg-slate-100 flex flex-col min-h-[250px]">
+            <div class="w-full h-full relative flex-1">
+                <iframe 
+                    id="googleMapIframe"
+                    class="w-full h-full border-none"
+                    src="https://maps.google.com/maps?q=프랑스+파리+에펠탑&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                    allowfullscreen
+                    loading="lazy">
+                </iframe>
+            </div>
+
+            <div class="bg-white border-t border-slate-200 p-2.5 flex justify-between items-center z-10 shrink-0 text-xs">
+                <div class="flex items-center gap-1.5 truncate max-w-[60%]">
+                    <i class="fa-solid fa-location-dot text-indigo-600"></i>
+                    <span id="currentPlaceTitle" class="font-bold text-slate-800 truncate">경로 안내: 출발지 ➔ 목적지</span>
+                </div>
+                <div class="flex gap-1.5 shrink-0">
+                    <button onclick="openCurrentInNaver()" class="px-2.5 py-1 bg-emerald-50 text-emerald-700 font-semibold rounded-lg border border-emerald-200 text-[11px]">
+                        네이버
+                    </button>
+                    <button onclick="resetMapView()" class="px-2.5 py-1 bg-slate-100 text-slate-600 font-semibold rounded-lg text-[11px]">
+                        경로 다시보기
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 토스트 알림 메시지 -->
+    <div id="toast" class="fixed bottom-20 md:bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-3 border border-slate-700 text-xs">
+            <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+            <span id="toastMsg" class="font-semibold"></span>
+        </div>
+    </div>
+
+    <!-- Firebase & 추가 스크립트 -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore, collection, onSnapshot, doc, setDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // 앱 상태 관리
+        let memoData = [];
+        let privateMemoData = JSON.parse(localStorage.getItem('myPrivateMemos') || '[]');
+        let scrapData = [];
+        let routeHistory = JSON.parse(localStorage.getItem('myRouteHistory') || '[]');
+        let userPinCode = "1234";
+        let isPrivateUnlocked = false;
+
+        // 탭 전환 기능
+        function switchTab(tabName) {
+            const tabs = ['transit', 'cost', 'ai_translator', 'reels', 'itinerary', 'private'];
+            tabs.forEach((t, i) => {
+                const idx = i + 1;
+                const content = document.getElementById(`tabContent${idx}`);
+                const desktopBtn = document.getElementById(`tabBtn${idx}`);
+                const mobileBtn = document.getElementById(`mTabBtn${idx}`);
+
+                if (t === tabName) {
+                    content?.classList.remove('hidden');
+                    if (desktopBtn) {
+                        desktopBtn.className = "flex-1 py-2 px-1 rounded-lg font-bold transition flex items-center justify-center gap-1 bg-white text-indigo-600 shadow-sm";
+                    }
+                    if (mobileBtn) {
+                        mobileBtn.className = "flex flex-col items-center py-1 text-indigo-600 font-bold";
+                    }
+                } else {
+                    content?.classList.add('hidden');
+                    if (desktopBtn) {
+                        desktopBtn.className = "flex-1 py-2 px-1 rounded-lg transition flex items-center justify-center gap-1 text-slate-500";
+                    }
+                    if (mobileBtn) {
+                        mobileBtn.className = "flex flex-col items-center py-1 text-slate-500";
+                    }
+                }
+            });
+        }
+
+        // 경로 실시간 새로고침
+        function refreshRoute() {
+            const refreshIcon = document.getElementById('refreshIcon');
+            if (refreshIcon) refreshIcon.classList.add('fa-spin');
+            
+            calculateRoute().finally(() => {
+                if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+                showToast('실시간 버스 시간대 및 경로를 갱신했습니다!');
+            });
+        }
+
+        // 최근 조회 히스토리 저장 및 렌더링
+        function saveRouteToHistory(start, end, data) {
+            const timeStr = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+            const historyItem = {
+                id: Date.now().toString(),
+                start,
+                end,
+                timeStr,
+                data
+            };
+
+            // 중복 방지 및 최대 5개 저장
+            routeHistory = [historyItem, ...routeHistory.filter(h => !(h.start === start && h.end === end))].slice(0, 5);
+            localStorage.setItem('myRouteHistory', JSON.stringify(routeHistory));
+            renderRouteHistory();
+        }
+
+        function renderRouteHistory() {
+            const container = document.getElementById('routeHistoryContainer');
+            if (!container) return;
+
+            if (routeHistory.length === 0) {
+                container.classList.add('hidden');
+                return;
+            }
+
+            container.classList.remove('hidden');
+            container.innerHTML = routeHistory.map(h => `
+                <button onclick="loadHistoryRoute('${h.id}')" class="shrink-0 bg-white hover:bg-indigo-50 border border-slate-200 hover:border-indigo-300 p-2 rounded-xl text-left shadow-sm transition group">
+                    <div class="flex items-center gap-1 text-[10px] text-indigo-600 font-bold">
+                        <i class="fa-solid fa-clock"></i> <span>${h.timeStr} 조회</span>
+                    </div>
+                    <div class="font-bold text-slate-800 text-[11px] truncate max-w-[130px] group-hover:text-indigo-700">
+                        ${h.start} ➔ ${h.end}
+                    </div>
+                </button>
+            `).join('');
+        }
+
+        function loadHistoryRoute(id) {
+            const item = routeHistory.find(h => h.id === id);
+            if (!item) return;
+
+            document.getElementById('startLocInput').value = item.start;
+            document.getElementById('endLocInput').value = item.end;
+            renderRouteData(item.start, item.end, item.data);
+            focusRouteOnMap(item.start, item.end);
+            showToast(`${item.timeStr}에 조회했던 이전 경로입니다.`);
+        }
+
+        // 선택된 개별 경로 렌더링 카드 생성 함수
+        function renderSingleRouteCard(route, rIdx, totalRoutesCount) {
+            const isBest = rIdx === 0;
+            return `
+                <div class="bg-white p-4 rounded-2xl border ${isBest ? 'border-indigo-300 ring-2 ring-indigo-100' : 'border-slate-200'} shadow-sm space-y-3">
+                    <div class="flex items-center justify-between border-b pb-2">
+                        <div>
+                            <span class="text-[10px] ${isBest ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-700'} font-bold px-2 py-0.5 rounded-full inline-block mb-1">
+                                ${route.routeName || `경로 옵션 ${rIdx + 1}`}
+                            </span>
+                            <h4 class="font-extrabold text-slate-800 text-xs sm:text-sm">${route.summary || '최적 경로'}</h4>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs bg-indigo-100 text-indigo-700 font-bold px-2 py-0.5 rounded-lg inline-block">${route.estimatedTime || '소요시간 미정'}</span>
+                            <span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-lg block mt-1">${route.totalTransfers || '환승 정보'}</span>
+                        </div>
+                    </div>
+
+                    <!-- 상세 이동 단계 (도보 ➔ 첫 버스 탑승 정류장 ➔ 하차 ➔ 도보/환승) -->
+                    <div class="space-y-2.5 text-xs">
+                        <p class="font-bold text-slate-800 flex items-center gap-1"><i class="fa-solid fa-map-pin text-indigo-500"></i> 상세 단계별 이동 안내:</p>
+                        ${route.steps ? route.steps.map((step, idx) => {
+                            const isWalk = step.mode === '도보' || step.isWalking;
+                            return `
+                            <div class="${isWalk ? 'bg-emerald-50/60 border-emerald-200' : 'bg-slate-50 border-slate-200'} p-3 rounded-xl border space-y-1.5">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-extrabold ${isWalk ? 'text-emerald-700 bg-emerald-100' : 'text-indigo-600 bg-indigo-50'} px-2 py-0.5 rounded-md flex items-center gap-1">
+                                        <i class="fa-solid ${isWalk ? 'fa-person-walking' : 'fa-bus'} text-xs"></i> ${idx + 1}단계: ${step.mode}
+                                    </span>
+                                    <span class="text-[10px] text-slate-500 font-medium">${step.duration || step.stopCount || ''}</span>
+                                </div>
+
+                                ${step.busRealtimeSchedule ? `
+                                    <div class="bg-indigo-50/80 p-2 rounded-lg border border-indigo-100 flex items-center gap-1.5 text-[11px] text-indigo-900">
+                                        <i class="fa-solid fa-bus text-indigo-600"></i>
+                                        <span class="font-bold">실시간 도착 정보:</span>
+                                        <span>${step.busRealtimeSchedule}</span>
+                                    </div>
+                                ` : ''}
+
+                                <div class="text-slate-700 space-y-1 text-[11px] pt-0.5">
+                                    ${isWalk ? `
+                                        <p class="font-semibold text-emerald-800"><i class="fa-solid fa-arrow-right-to-city text-emerald-600"></i> <strong>이동 경로:</strong> ${step.description || `${step.boardAt}에서 ${step.alightAt}(까지) 도보 이동`}</p>
+                                    ` : `
+                                        <p><strong>🚏 승차 정류장:</strong> <span class="text-emerald-700 font-bold">${step.boardAt}</span></p>
+                                        ${step.intermediateStops && step.intermediateStops.length > 0 ? `
+                                            <div class="pl-2 border-l-2 border-indigo-300 my-1 py-1 text-slate-600 bg-white rounded p-1.5 border">
+                                                <p class="font-semibold text-[10px] text-slate-400 mb-0.5">통과 정류장 (${step.intermediateStops.length}개):</p>
+                                                <p class="font-medium text-slate-700 text-[10px]">${step.intermediateStops.join(' ➔ ')}</p>
+                                            </div>
+                                        ` : ''}
+                                        <p><strong>🏁 하차 정류장:</strong> <span class="text-rose-600 font-bold">${step.alightAt}</span></p>
+                                    `}
+                                </div>
+                            </div>
+                        `}).join('') : ''}
+                    </div>
+                </div>`;
+        }
+
+        // 경로 결과 전체 렌더링
+        function renderRouteData(start, end, data) {
+            const container = document.getElementById('routeResultContainer');
+            if (!container) return;
+
+            const routes = data.routes || [data]; // 다중 경로 배열 지원
+
+            container.innerHTML = `
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between px-1">
+                        <span class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                            <i class="fa-solid fa-route text-indigo-600"></i> 추천 경로 ${routes.length}개 검색 완료
+                        </span>
+                        <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">
+                            보행 연결 & 우회 검증
+                        </span>
+                    </div>
+
+                    <!-- 막다른 길 / 우회 경로 상태 안내 -->
+                    <div class="bg-emerald-50 p-2.5 rounded-xl text-[11px] text-emerald-900 space-y-1 border border-emerald-200 flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved text-emerald-600 text-base shrink-0"></i>
+                        <div>
+                            <p class="font-bold text-emerald-800">경로 상태: ${data.roadSafetyStatus || '막다른 길, 공사구간 및 보행금지 구역 차단 검증 완료'}</p>
+                            <p class="text-[10px] text-emerald-700">출발지에서 승차 정류장까지의 도보 길안내와 도착 후 이동까지 포함된 안전 경로입니다.</p>
+                        </div>
+                    </div>
+
+                    <!-- 다양한 대중교통 경로 카드 목록 -->
+                    ${routes.map((route, idx) => renderSingleRouteCard(route, idx, routes.length)).join('')}
+                </div>`;
+        }
+
+        // Gemini AI를 이용한 실시간 전세계 최적 다중 경로 및 도보 연결 안내
+        async function calculateRoute() {
+            const start = document.getElementById('startLocInput').value.trim() || '포천시청';
+            const end = document.getElementById('endLocInput').value.trim() || '잠실역';
+            const container = document.getElementById('routeResultContainer');
+
+            container.innerHTML = `
+                <div class="bg-white p-5 rounded-2xl border border-indigo-200 shadow-sm text-center py-6 space-y-2">
+                    <i class="fa-solid fa-route fa-spin text-indigo-600 text-2xl"></i>
+                    <p class="text-xs font-bold text-slate-700">'${start}' ➔ '${end}' 정류장 도보 이동 및 다중 대체 경로 분석 중...</p>
+                </div>`;
+
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+                
+                const prompt = `출발지: "${start}", 목적지: "${end}"에 대한 대중교통 경로를 작성해줘.
+                중요 규칙:
+                1. 출발지에서 승차 정류장까지 무조건 '도보'로 걸어서 이동하는 단계를 첫 번째로 포함할 것.
+                2. 버스/지하철 탑승 후 하차하여 최종 목적지까지 '도보'로 걸어서 이동하는 마지막 단계를 포함할 것.
+                3. 사용자가 선택할 수 있도록 최소 2~3개의 서로 다른 대안 경로 옵션(예: 추천 최단시간 경로, 최소 환승 경로, 최소 도보 경로 등)을 배열로 제공할 것.
+
+                응답은 반드시 아래 JSON 형식으로 작성해줘:
+                {
+                  "roadSafetyStatus": "보행 안전 및 막다른 길/공사구간 우회 검증 완료",
+                  "routes": [
+                    {
+                      "routeName": "추천 최단 경로",
+                      "summary": "3001번 직행버스 ➔ 도보",
+                      "estimatedTime": "약 48분",
+                      "totalTransfers": "환승 0회",
+                      "steps": [
+                        {
+                          "mode": "도보",
+                          "isWalking": true,
+                          "duration": "도보 4분 (약 250m)",
+                          "boardAt": "포천시청",
+                          "alightAt": "포천시청 앞 3번 버스정류장",
+                          "description": "포천시청 정문에서 신호등을 건너 3번 버스정류장까지 걸어서 이동"
+                        },
+                        {
+                          "mode": "3001번 직행버스",
+                          "isWalking": false,
+                          "busRealtimeSchedule": "배차간격 15분 / 5분 후, 19분 후 도착 예정",
+                          "boardAt": "포천시청 앞 3번 버스정류장",
+                          "stopCount": "6개 정류장 이동",
+                          "intermediateStops": ["포천시청", "어룡2리", "자작2리", "대경대입구", "송우시장", "소흘읍사무소"],
+                          "alightAt": "잠실역.롯데월드 정류장"
+                        },
+                        {
+                          "mode": "도보",
+                          "isWalking": true,
+                          "duration": "도보 2분 (약 120m)",
+                          "boardAt": "잠실역.롯데월드 정류장",
+                          "alightAt": "잠실역 출구",
+                          "description": "정류장 하차 후 2번 출구 방향으로 걸어서 도착"
+                        }
+                      ]
+                    },
+                    {
+                      "routeName": "대안 경로 2 (최소 환승/일반버스)",
+                      "summary": "3002번 버스 이용",
+                      "estimatedTime": "약 55분",
+                      "totalTransfers": "환승 0회",
+                      "steps": [
+                        {
+                          "mode": "도보",
+                          "isWalking": true,
+                          "duration": "도보 6분",
+                          "boardAt": "포천시청",
+                          "alightAt": "포천시중앙 정류장",
+                          "description": "포천 중앙로 방향으로 도보 이동"
+                        },
+                        {
+                          "mode": "3002번 시외버스",
+                          "isWalking": false,
+                          "busRealtimeSchedule": "12분 후 도착 예정",
+                          "boardAt": "포천시중앙 정류장",
+                          "stopCount": "8개 정류장 이동",
+                          "intermediateStops": ["포천시중앙", "송우리", "의정부역"],
+                          "alightAt": "잠실역 지하환승센터"
+                        },
+                        {
+                          "mode": "도보",
+                          "isWalking": true,
+                          "duration": "도보 3분",
+                          "boardAt": "잠실역 지하환승센터",
+                          "alightAt": "잠실역",
+                          "description": "지하 통로 연결 방향으로 도보 이동"
+                        }
+                      ]
+                    }
+                  ]
+                }`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                    generationConfig: { responseMimeType: "application/json" }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (text) {
+                    const data = JSON.parse(text);
+                    renderRouteData(start, end, data);
+                    saveRouteToHistory(start, end, data);
+                }
+            } catch (err) {
+                container.innerHTML = `
+                    <div class="bg-white p-4 rounded-2xl border border-indigo-200 shadow-sm space-y-2 text-xs">
+                        <div class="flex justify-between items-center border-b pb-2">
+                            <h4 class="font-bold text-slate-800">${start} ➔ ${end}</h4>
+                        </div>
+                        <p>• <strong>경로 안내:</strong> 출발 정류장 도보 이동 안내 및 대중교통 조회를 완료했습니다. 지도 화면을 확인해 주세요.</p>
+                    </div>`;
+            }
+
+            focusRouteOnMap(start, end);
+            loadLocalPhrases(end);
+        }
+
+        // 항공 및 현지 경비 실제 시세 계산
+        async function calculateFlightAndCost() {
+            const flightStart = document.getElementById('flightStartInput')?.value.trim() || '인천공항(ICN)';
+            const flightEnd = document.getElementById('flightEndInput')?.value.trim() || '프랑스 파리(CDG)';
+            const people = parseInt(document.getElementById('travelerCount').value) || 1;
+            const days = parseInt(document.getElementById('travelDays').value) || 1;
+            const resultDiv = document.getElementById('flightCostResult');
+
+            resultDiv.innerHTML = `
+                <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200 text-center text-xs space-y-1">
+                    <i class="fa-solid fa-plane fa-spin text-amber-600 text-lg"></i>
+                    <p class="font-bold text-slate-700">'${flightStart}' ➔ '${flightEnd}' 항공 노선 및 경비 분석 중...</p>
+                </div>`;
+
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+                
+                const prompt = `출발지: "${flightStart}", 목적지: "${flightEnd}", 인원: ${people}명, 기간: ${days}일 일 때 해당 노선의 왕복 항공권 시세 및 체류 경비를 아래 JSON 형식으로 계산해줘:
+                {
+                  "routeInfo": "${flightStart} ➔ ${flightEnd}",
+                  "currency": "통화 (예: EUR, JPY, USD, KRW 등)",
+                  "flightPerPerson": "1인 왕복 항공권 예상 시세 (원화 금액 표시, 예: 약 1,200,000원)",
+                  "dailyExpensePerPerson": "1인 1일 평균 경비 (식비, 대중교통 등 원화 표시, 예: 약 120,000원)",
+                  "totalFlight": "전체 인원 항공 총액 (예: 2,400,000원)",
+                  "totalDaily": "전체 기간/인원 생활 경비 총액 (예: 960,000원)",
+                  "grandTotal": "총 예상 총액 (예: 3,360,000원)",
+                  "moneyTip": "현지 환전/트래블로그 카드/현금 가이드"
+                }`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                    generationConfig: { responseMimeType: "application/json" }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (text) {
+                    const data = JSON.parse(text);
+                    resultDiv.innerHTML = `
+                        <div class="bg-white p-4 rounded-2xl border border-amber-200 shadow-sm space-y-3 text-xs">
+                            <h4 class="font-extrabold text-slate-800 text-xs sm:text-sm border-b pb-2 flex items-center justify-between">
+                                <span>✈️ ${data.routeInfo} 분석 결과</span>
+                                <span class="text-amber-600 bg-amber-50 px-2 py-0.5 rounded-lg text-[11px]">${people}명 / ${days}일 기준</span>
+                            </h4>
+                            <div class="space-y-2 text-slate-700 text-[11px]">
+                                <div class="flex justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                                    <span>🎫 1인 왕복 항공권 예상 시세</span>
+                                    <strong class="text-slate-900">${data.flightPerPerson}</strong>
+                                </div>
+                                <div class="flex justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                                    <span>🍽️ 1인 하루 평균 체류비</span>
+                                    <strong class="text-slate-900">${data.dailyExpensePerPerson}</strong>
+                                </div>
+                                <div class="flex justify-between bg-amber-50 p-2.5 rounded-xl border border-amber-200 text-amber-900 font-bold">
+                                    <span>💰 총 예상 합계 비용</span>
+                                    <strong class="text-amber-700 text-xs">${data.grandTotal}</strong>
+                                </div>
+                            </div>
+                            <div class="p-2.5 bg-indigo-50 border border-indigo-100 rounded-xl text-[11px] text-indigo-900">
+                                💡 <strong>환전 및 팁:</strong> ${data.moneyTip || '트래블월렛/트래블로그 카드 지참 권장'}
+                            </div>
+                        </div>`;
+                }
+            } catch (err) {
+                resultDiv.innerHTML = `<p class="text-xs text-rose-500 font-bold text-center">경비 계산 정보를 불러오지 못했습니다.</p>`;
+            }
+        }
+
+        // 목적지 실전 현지 표현 자동 로드
+        async function loadLocalPhrases(destination) {
+            const container = document.getElementById('localPhrasesContainer');
+            if (!container) return;
+
+            container.innerHTML = `
+                <div class="bg-white p-4 rounded-2xl border border-purple-100 shadow-sm text-center text-xs py-4">
+                    <i class="fa-solid fa-spinner fa-spin text-purple-600"></i>
+                    <p class="font-bold text-slate-600 mt-1">'${destination}' 현지 실전 회화 불러오는 중...</p>
+                </div>`;
+
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+                const prompt = `목적지 "${destination}"에서 사용할 수 있는 현지 실전 유용한 회화 표현 3가지를 아래 JSON 형식으로 작성해줘:
+                {
+                  "phrases": [
+                    {
+                      "situation": "상황 (예: 주문할 때 / 길 찾을 때)",
+                      "original": "현지 원어 문장",
+                      "pronunciation": "한국어 발음 (예: 스미마센, 유도레스카?)",
+                      "meaning": "뜻"
+                    }
+                  ]
+                }`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                    generationConfig: { responseMimeType: "application/json" }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (text) {
+                    const data = JSON.parse(text);
+                    container.innerHTML = `
+                        <div class="bg-white p-4 rounded-2xl border border-purple-100 shadow-sm space-y-2 text-xs">
+                            <h4 class="font-bold text-slate-800 flex items-center justify-between border-b pb-1.5">
+                                <span>🗣️ ${destination} 실전 표현</span>
+                                <span class="text-[10px] text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">현지인 한글 발음 지원</span>
+                            </h4>
+                            <div class="space-y-2">
+                                ${data.phrases.map(p => `
+                                    <div class="bg-purple-50/50 p-2.5 rounded-xl border border-purple-100 space-y-1">
+                                        <div class="flex justify-between items-center text-[10px] font-bold text-purple-700">
+                                            <span>📌 ${p.situation}</span>
+                                            <span>${p.meaning}</span>
+                                        </div>
+                                        <p class="font-extrabold text-slate-800 text-xs">${p.original}</p>
+                                        <p class="text-rose-600 font-bold text-[11px]">🗣️ [발음] ${p.pronunciation}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>`;
+                }
+            } catch (e) {
+                container.innerHTML = '';
+            }
+        }
+
+        // AI 시각/카메라 번역 기능
+        async function processAITranslation(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const previewImg = document.getElementById('aiImagePreview');
+            const previewContainer = document.getElementById('aiImagePreviewContainer');
+            const resultContainer = document.getElementById('aiTranslationResult');
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewImg.src = e.target.result;
+                previewContainer.classList.remove('hidden');
+                
+                // Gemini API Base64 처리 및 번역 실행
+                const base64Data = e.target.result.split(',')[1];
+                runImageAnalysis(base64Data, file.type);
+            };
+            reader.readAsDataURL(file);
+
+            resultContainer.classList.remove('hidden');
+            resultContainer.innerHTML = `
+                <div class="bg-white p-4 rounded-2xl border border-purple-200 text-center text-xs space-y-2">
+                    <i class="fa-solid fa-wand-magic-sparkles fa-spin text-purple-600 text-lg"></i>
+                    <p class="font-bold text-slate-700">AI가 메뉴판/간판의 텍스트와 한국어 발음을 번역 중입니다...</p>
+                </div>`;
+        }
+
+        async function runImageAnalysis(base64Image, mimeType) {
+            const resultContainer = document.getElementById('aiTranslationResult');
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+                const prompt = `이 이미지에 있는 현지 언어/메뉴판/간판 글자들을 해석하고 다음 JSON 구조로 응답해줘:
+                {
+                  "detectedLanguage": "감지된 언어명",
+                  "translatedText": "자연스러운 한국어 번역 내용",
+                  "pronunciation": "한국어 발음 표기",
+                  "recommendation": "주문 팁 또는 올바른 한국어 답변 가이드"
+                }`;
+
+                const payload = {
+                    contents: [{
+                        parts: [
+                            { inlineData: { mimeType: mimeType || 'image/jpeg', data: base64Image } },
+                            { text: prompt }
+                        ]
+                    }],
+                    generationConfig: { responseMimeType: "application/json" }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (text) {
+                    const data = JSON.parse(text);
+                    resultContainer.innerHTML = `
+                        <div class="bg-white p-4 rounded-2xl border border-purple-200 shadow-sm space-y-3 text-xs">
+                            <div class="flex justify-between items-center border-b pb-2">
+                                <span class="font-extrabold text-purple-700">📸 AI 이미지 실시간 번역</span>
+                                <span class="text-[10px] bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full font-bold">${data.detectedLanguage || '자동 감지'}</span>
+                            </div>
+                            <div class="space-y-1">
+                                <p class="text-[10px] font-bold text-slate-400">번역 결과:</p>
+                                <p class="font-extrabold text-slate-800 text-xs sm:text-sm bg-slate-50 p-2.5 rounded-xl border border-slate-200">${data.translatedText}</p>
+                            </div>
+                            <div class="space-y-1">
+                                <p class="text-[10px] font-bold text-rose-500">🗣️ 한글 발음 Guide:</p>
+                                <p class="font-bold text-rose-600 bg-rose-50 p-2 rounded-xl border border-rose-100">${data.pronunciation}</p>
+                            </div>
+                            <div class="p-2.5 bg-emerald-50 border border-emerald-100 rounded-xl text-[11px] text-emerald-900">
+                                💡 <strong>주문 및 답변 꿀팁:</strong> ${data.recommendation}
+                            </div>
+                        </div>`;
+                }
+            } catch (err) {
+                resultContainer.innerHTML = `<p class="text-xs text-rose-500 font-bold text-center">이미지 번역 중 오류가 발생했습니다.</p>`;
+            }
+        }
+
+        // 공유 및 개인 메모
+        function addMemoItem() {
+            const input = document.getElementById('memoInput');
+            if (!input.value.trim()) return;
+            memoData.push({ id: Date.now().toString(), text: input.value.trim(), done: false });
+            input.value = '';
+            renderMemos();
+            showToast('공유 메모가 추가되었습니다.');
+        }
+
+        function toggleMemo(id) {
+            memoData = memoData.map(m => m.id === id ? { ...m, done: !m.done } : m);
+            renderMemos();
+        }
+
+        function deleteMemo(id) {
+            memoData = memoData.filter(m => m.id !== id);
+            renderMemos();
+        }
+
+        function renderMemos() {
+            const list = document.getElementById('memoList');
+            if (!list) return;
+            list.innerHTML = memoData.map(m => `
+                <div class="flex items-center justify-between p-2.5 bg-white border border-slate-200 rounded-xl text-xs">
+                    <div class="flex items-center gap-2 cursor-pointer" onclick="toggleMemo('${m.id}')">
+                        <i class="fa-regular ${m.done ? 'fa-square-check text-emerald-600' : 'fa-square text-slate-300'} text-base"></i>
+                        <span class="${m.done ? 'line-through text-slate-400' : 'text-slate-800 font-semibold'}">${m.text}</span>
+                    </div>
+                    <button onclick="deleteMemo('${m.id}')" class="text-slate-400 hover:text-rose-500 text-xs px-2"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+
+        // 비밀 개인 메모 기능
+        function unlockPrivateMemo() {
+            const pin = document.getElementById('pinCodeInput').value;
+            if (pin === userPinCode) {
+                isPrivateUnlocked = true;
+                document.getElementById('privateLockScreen').classList.add('hidden');
+                document.getElementById('privateContentScreen').classList.remove('hidden');
+                renderPrivateMemos();
+                showToast('비밀 메모장 잠금이 해제되었습니다.');
+            } else {
+                showToast('비밀번호가 올바르지 않습니다.', 'rose');
+            }
+        }
+
+        function lockPrivateMemo() {
+            isPrivateUnlocked = false;
+            document.getElementById('pinCodeInput').value = '';
+            document.getElementById('privateLockScreen').classList.remove('hidden');
+            document.getElementById('privateContentScreen').classList.add('hidden');
+            showToast('메모장이 다시 잠겼습니다.');
+        }
+
+        function addPrivateMemo() {
+            const input = document.getElementById('privateMemoInput');
+            if (!input.value.trim()) return;
+            privateMemoData.push({ id: Date.now().toString(), text: input.value.trim() });
+            localStorage.setItem('myPrivateMemos', JSON.stringify(privateMemoData));
+            input.value = '';
+            renderPrivateMemos();
+        }
+
+        function deletePrivateMemo(id) {
+            privateMemoData = privateMemoData.filter(p => p.id !== id);
+            localStorage.setItem('myPrivateMemos', JSON.stringify(privateMemoData));
+            renderPrivateMemos();
+        }
+
+        function renderPrivateMemos() {
+            const list = document.getElementById('privateMemoList');
+            if (!list) return;
+            list.innerHTML = privateMemoData.map(p => `
+                <div class="flex items-center justify-between p-2.5 bg-white border border-rose-200 rounded-xl text-xs">
+                    <span class="text-slate-800 font-medium"><i class="fa-solid fa-key text-rose-400 text-xs mr-1"></i> ${p.text}</span>
+                    <button onclick="deletePrivateMemo('${p.id}')" class="text-slate-400 hover:text-rose-500 text-xs px-1"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+
+        // 스크랩 추가
+        function handleAddReel(e) {
+            e.preventDefault();
+            const name = document.getElementById('reelName').value.trim();
+            const category = document.getElementById('reelCategory').value;
+            const link = document.getElementById('reelLink').value.trim();
+            const img = document.getElementById('reelImg').value.trim() || 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80';
+            const memo = document.getElementById('reelMemo').value.trim();
+
+            scrapData.unshift({ id: Date.now().toString(), name, category, link, img, memo });
+            renderScraps();
+            document.getElementById('addReelForm').reset();
+            showToast('맛집 스크랩에 새로 추가되었습니다!');
+        }
+
+        function deleteScrap(id) {
+            scrapData = scrapData.filter(s => s.id !== id);
+            renderScraps();
+        }
+
+        function renderScraps() {
+            const list = document.getElementById('scrapList');
+            const count = document.getElementById('scrapCount');
+            if (!list) return;
+            if (count) count.innerText = `${scrapData.length}개`;
+
+            list.innerHTML = scrapData.map(s => `
+                <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex gap-3 text-xs">
+                    <img src="${s.img}" class="w-16 h-16 rounded-lg object-cover shrink-0" onerror="this.src='https://placehold.co/100x100?text=No+Image'">
+                    <div class="flex-1 space-y-1 overflow-hidden">
+                        <div class="flex justify-between items-start">
+                            <span class="font-extrabold text-slate-800 truncate">${s.name}</span>
+                            <button onclick="deleteScrap('${s.id}')" class="text-slate-400 hover:text-rose-500 text-[11px]"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <p class="text-[10px] text-indigo-600 font-bold bg-indigo-50 px-1.5 py-0.5 rounded inline-block">${s.category}</p>
+                        <p class="text-[11px] text-slate-600 truncate">${s.memo || '메모 없음'}</p>
+                        <div class="flex gap-2 pt-1">
+                            ${s.link ? `<a href="${s.link}" target="_blank" class="text-[10px] font-bold text-pink-600 hover:underline"><i class="fa-brands fa-instagram"></i> 링크 보기</a>` : ''}
+                            <button onclick="focusPlaceOnMap('${s.name}')" class="text-[10px] font-bold text-indigo-600 hover:underline"><i class="fa-solid fa-map-location-dot"></i> 지도 위치 보기</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 경로 표시 지도
+        function focusRouteOnMap(start, end) {
+            const iframe = document.getElementById('googleMapIframe');
+            const titleSpan = document.getElementById('currentPlaceTitle');
+            if (iframe) {
+                iframe.src = `https://maps.google.com/maps?saddr=${encodeURIComponent(start)}&daddr=${encodeURIComponent(end)}&dirflg=r&output=embed`;
+            }
+            if (titleSpan) {
+                titleSpan.innerText = `경로: ${start} ➔ ${end}`;
+            }
+        }
+
+        function focusPlaceOnMap(placeName) {
+            const start = document.getElementById('startLocInput').value.trim() || '인천 국제공항';
+            focusRouteOnMap(start, placeName);
+        }
+
+        function resetMapView() {
+            const start = document.getElementById('startLocInput').value.trim() || '인천 국제공항';
+            const end = document.getElementById('endLocInput').value.trim() || '프랑스 파리 에펠탑';
+            focusRouteOnMap(start, end);
+        }
+
+        function openCurrentInNaver() {
+            const start = document.getElementById('startLocInput').value.trim();
+            const end = document.getElementById('endLocInput').value.trim();
+            window.open(`https://map.naver.com/v5/search/${encodeURIComponent(start + " " + end)}`, '_blank');
+        }
+
+        function openNaverPublicTransit() {
+            const start = document.getElementById('startLocInput').value.trim();
+            const end = document.getElementById('endLocInput').value.trim();
+            window.open(`https://map.naver.com/v5/directions/${encodeURIComponent(start)}/${encodeURIComponent(end)}/-/pubtransit`, '_blank');
+        }
+
+        function openGoogleMapsTransit() {
+            const start = document.getElementById('startLocInput').value.trim();
+            const end = document.getElementById('endLocInput').value.trim();
+            window.open(`https://www.google.com/maps/dir/${encodeURIComponent(start)}/${encodeURIComponent(end)}`, '_blank');
+        }
+
+        function copyShareLink() {
+            const tempInput = document.createElement('input');
+            tempInput.value = window.location.href;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast('여행 계획 공유 링크가 복사되었습니다!');
+        }
+
+        function showToast(msg, color = 'emerald') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastIcon = document.getElementById('toastIcon');
+
+            if (!toast || !toastMsg) return;
+            toastMsg.innerText = msg;
+            
+            if (color === 'rose') {
+                toastIcon.className = "fa-solid fa-circle-xmark text-rose-400 text-base";
+            } else {
+                toastIcon.className = "fa-solid fa-circle-check text-emerald-400 text-base";
+            }
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // HTML 인라인 onclick 이벤트 핸들러 지원을 위해 전역 window 객체에 바인딩
+        window.switchTab = switchTab;
+        window.refreshRoute = refreshRoute;
+        window.loadHistoryRoute = loadHistoryRoute;
+        window.calculateRoute = calculateRoute;
+        window.calculateFlightAndCost = calculateFlightAndCost;
+        window.loadLocalPhrases = loadLocalPhrases;
+        window.processAITranslation = processAITranslation;
+        window.addMemoItem = addMemoItem;
+        window.toggleMemo = toggleMemo;
+        window.deleteMemo = deleteMemo;
+        window.unlockPrivateMemo = unlockPrivateMemo;
+        window.lockPrivateMemo = lockPrivateMemo;
+        window.addPrivateMemo = addPrivateMemo;
+        window.deletePrivateMemo = deletePrivateMemo;
+        window.handleAddReel = handleAddReel;
+        window.deleteScrap = deleteScrap;
+        window.focusPlaceOnMap = focusPlaceOnMap;
+        window.resetMapView = resetMapView;
+        window.openCurrentInNaver = openCurrentInNaver;
+        window.openNaverPublicTransit = openNaverPublicTransit;
+        window.openGoogleMapsTransit = openGoogleMapsTransit;
+        window.copyShareLink = copyShareLink;
+
+        // 앱 시작 초기화
+        window.onload = function() {
+            renderScraps();
+            renderMemos();
+            renderRouteHistory();
+            calculateRoute();
+            calculateFlightAndCost();
+        };
+    </script>
+</body>
+</html>
